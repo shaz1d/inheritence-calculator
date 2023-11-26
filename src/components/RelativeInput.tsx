@@ -34,7 +34,7 @@ const RelativeInput = ({ name }: Props) => {
       name.toLowerCase() === "grand mother" ||
       !isChecked ? null : (
         <input
-          className="bg-pest-200 h-10 w-10 rounded-md text-center"
+          className="bg-pest-200 h-10 w-10 rounded-md text-center accent-pest-600"
           type="text"
           name=""
           id=""

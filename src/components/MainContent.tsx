@@ -17,9 +17,14 @@ const MainContent = () => {
           <RelativeInput name="Grand Mother" />
         </div>
       </div>
-      <div className="col-span-3 bg-pest-200 rounded-2xl p-5">
-        <h2>Property Description</h2>
-        <PropertyInput name="Land" type="decimal" />
+      <div className="col-span-3 bg-pest-200 rounded-2xl p-5 text-pest-600">
+        <h2 className="text-xl">Property Description</h2>
+        <div className="grid grid-cols-2 gap-4 mt-6">
+          <PropertyInput name="Land" type="decimal" />
+          <PropertyInput name="Gold" type="vori" />
+          <PropertyInput name="Silver" type="vori" />
+          <PropertyInput name="Currency" type="taka" />
+        </div>
       </div>
     </div>
   );
