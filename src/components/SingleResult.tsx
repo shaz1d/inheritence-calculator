@@ -1,6 +1,4 @@
-type Props = {};
-
-const SingleResult = (props: Props) => {
+const SingleResult = () => {
   return (
     <div className="p-5 bg-pest-700 rounded-xl">
       <div className="w-full flex justify-between items-center text-lg mb-4">
