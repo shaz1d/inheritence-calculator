@@ -2,7 +2,7 @@ type Props = {};
 
 const SingleResult = (props: Props) => {
   return (
-    <div className="p-5 bg-pest-700">
+    <div className="p-5 bg-pest-700 rounded-xl">
       <div className="w-full flex justify-between items-center text-lg mb-4">
         <span>Father Gets</span> <span className="text-right">0.123%</span>
       </div>
