@@ -32,7 +32,9 @@ const RelativeInput = ({ name, isChecked, dispatch }: Props) => {
         name={name}
         id={name}
       />
-      <label htmlFor={name}>{name}</label>
+      <label htmlFor={name} className="cursor-pointer">
+        {name}
+      </label>
       {name.toLowerCase() === "husband" ||
       name.toLowerCase() === "father" ||
       name.toLowerCase() === "mother" ||
