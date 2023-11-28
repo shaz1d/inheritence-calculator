@@ -21,6 +21,11 @@ const MainContent = () => {
   const [numberOfDaughters, setNumberOfDaughters] = useState(1);
   const [numberOfWives, setNumberOfWives] = useState(1);
 
+  const [land, setLand] = useState("0");
+  const [gold, setGold] = useState("0");
+  const [silver, setSilver] = useState("0");
+  const [currency, setCurrency] = useState("0");
+
   const [state, dispatch] = useReducer(reducer, conditions);
 
   function calculate() {
@@ -85,10 +90,30 @@ const MainContent = () => {
         <div className="col-span-4 bg-pest-200 rounded-2xl p-5 text-pest-600">
           <h2 className="text-xl">Property Description</h2>
           <div className="grid grid-cols-2 gap-4 mt-6">
-            <PropertyInput name="Land" type="decimal" />
-            <PropertyInput name="Gold" type="vori" />
-            <PropertyInput name="Silver" type="vori" />
-            <PropertyInput name="Currency" type="taka" />
+            <PropertyInput
+              name="Land"
+              type="decimal"
+              state={land}
+              setState={setLand}
+            />
+            <PropertyInput
+              name="Gold"
+              type="vori"
+              state={gold}
+              setState={setGold}
+            />
+            <PropertyInput
+              name="Silver"
+              type="vori"
+              state={silver}
+              setState={setSilver}
+            />
+            <PropertyInput
+              name="Currency"
+              type="taka"
+              state={currency}
+              setState={setCurrency}
+            />
             <button
               className="col-span-2 rounded-md bg-pest-600 text-white py-3 text-xl"
               onClick={calculate}

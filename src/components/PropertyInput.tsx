@@ -1,15 +1,13 @@
-import { useState } from "react";
-
 type Props = {
   name: string;
   type: string;
+  state: string;
+  setState: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const PropertyInput = ({ name, type }: Props) => {
-  const [state, setState] = useState("");
+const PropertyInput = ({ name, type, state, setState }: Props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (/^-?\d*(\.\d{0,2})?$/.test(e.target.value)) {
-      ///^-?\d*\.?\d*$/
       setState(e.target.value);
     }
   };
@@ -27,7 +25,8 @@ const PropertyInput = ({ name, type }: Props) => {
         type="text"
         id={name}
         onChange={handleChange}
-        value={state}
+        value={state === "0" ? "" : state}
+        placeholder="0"
       />
     </div>
   );
