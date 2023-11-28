@@ -44,8 +44,15 @@ const MainContent = () => {
     const totalSilver = parseFloat(silver);
     const totalCurrency = parseFloat(currency);
 
+    const husbandShare = state.hasHusband
+      ? state.hasChild
+        ? 1 / 4
+        : 1 / 2
+      : 0;
+    const wifeShare = state.hasWife ? (state.hasChild ? 1 / 8 : 1 / 4) : 0;
+
     if (state.hasHusband) {
-      const share = state.hasChild ? 1 / 4 : 1 / 1;
+      const share = husbandShare;
       result.push({
         heir: "Husband",
         share,
@@ -56,7 +63,7 @@ const MainContent = () => {
       });
     }
     if (state.hasWife) {
-      const share = state.hasChild ? 1 / 8 : 1 / 4;
+      const share = wifeShare;
       result.push({
         heir: "Wife",
         share,
@@ -67,7 +74,7 @@ const MainContent = () => {
       });
     }
     if (state.hasSon) {
-      const share = childShare / (numberOfSons + numberOfDaughters);
+      const share = 9 / (numberOfSons + numberOfDaughters);
       result.push({
         heir: "Son",
         share,
