@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 type Action = {
   type: string;
 };
@@ -7,19 +5,17 @@ type Props = {
   name: string;
   isChecked: boolean;
   dispatch: React.Dispatch<Action>;
+  state?: number;
+  setState?: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const RelativeInput = ({ name, isChecked, dispatch }: Props) => {
-  const [sons, setSons] = useState(1);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    if (isNaN(parseInt(newValue)) || !parseInt(newValue)) {
-      setSons(1);
-    } else {
-      setSons(parseInt(newValue));
-    }
-  };
+const RelativeInput = ({
+  name,
+  isChecked,
+  dispatch,
+  state,
+  setState,
+}: Props) => {
   return (
     <div className="flex gap-2 items-center min-h-[40px]">
       <input
@@ -42,12 +38,18 @@ const RelativeInput = ({ name, isChecked, dispatch }: Props) => {
       name.toLowerCase() === "grandmother" ||
       !isChecked ? null : (
         <input
-          className="bg-pest-200 h-10 w-10 rounded-md text-center accent-pest-600"
-          type="text"
+          className="bg-pest-200 h-10 w-14 rounded-md text-center accent-pest-600"
+          type="number"
           name=""
           id=""
-          value={sons}
-          onChange={handleChange}
+          max={name.toLowerCase() === "wife" ? 4 : 20}
+          min={1}
+          value={state}
+          onChange={(e) => {
+            if (setState) {
+              setState(parseInt(e.target.value, 10));
+            }
+          }}
         />
       )}
     </div>

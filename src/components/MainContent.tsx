@@ -17,13 +17,9 @@ const MainContent = () => {
     hasHusband: false,
   });
 
-  const [numberOfSons, setNumberOfSons] = useState(conditions.hasSon ? 1 : 0);
-  const [numberOfDaughters, setNumberOfDaughters] = useState(
-    conditions.hasDaughter ? 1 : 0
-  );
-  const [numberOfWives, setNumberOfWives] = useState(
-    conditions.hasWife ? 1 : 0
-  );
+  const [numberOfSons, setNumberOfSons] = useState(1);
+  const [numberOfDaughters, setNumberOfDaughters] = useState(1);
+  const [numberOfWives, setNumberOfWives] = useState(1);
 
   const [state, dispatch] = useReducer(reducer, conditions);
 
@@ -47,16 +43,22 @@ const MainContent = () => {
               name="Wife"
               isChecked={state.hasWife}
               dispatch={dispatch}
+              state={numberOfWives}
+              setState={setNumberOfWives}
             />
             <RelativeInput
               name="Son"
               isChecked={state.hasSon}
               dispatch={dispatch}
+              state={numberOfSons}
+              setState={setNumberOfSons}
             />
             <RelativeInput
               name="Daughter"
               isChecked={state.hasDaughter}
               dispatch={dispatch}
+              state={numberOfDaughters}
+              setState={setNumberOfDaughters}
             />
             <RelativeInput
               name="Father"
