@@ -4,8 +4,17 @@ import RelativeInput from "./RelativeInput";
 import Result from "./Result";
 import reducer from "../libs/utils";
 
+type RelativesShare = {
+  heir: string;
+  share: number;
+  land: number;
+  gold: number;
+  silver: number;
+  currency: number;
+};
+
 const MainContent = () => {
-  const [conditions, setConditions] = useState({
+  const conditions = {
     hasChild: false,
     hasSon: false,
     hasDaughter: false,
@@ -15,7 +24,7 @@ const MainContent = () => {
     hasTrueGrandmother: false,
     hasWife: false,
     hasHusband: false,
-  });
+  };
 
   const [numberOfSons, setNumberOfSons] = useState(1);
   const [numberOfDaughters, setNumberOfDaughters] = useState(1);
@@ -29,8 +38,47 @@ const MainContent = () => {
   const [state, dispatch] = useReducer(reducer, conditions);
 
   function calculate() {
-    setConditions({ ...conditions, hasHusband: true });
-    console.log(conditions);
+    const result: RelativesShare[] = [];
+    const totalLand = parseFloat(land);
+    const totalGold = parseFloat(gold);
+    const totalSilver = parseFloat(silver);
+    const totalCurrency = parseFloat(currency);
+
+    if (state.hasHusband) {
+      const share = state.hasChild ? 1 / 4 : 1 / 1;
+      result.push({
+        heir: "Husband",
+        share,
+        land: totalLand * share,
+        gold: totalGold * share,
+        silver: totalSilver * share,
+        currency: totalCurrency * share,
+      });
+    }
+    if (state.hasWife) {
+      const share = state.hasChild ? 1 / 8 : 1 / 4;
+      result.push({
+        heir: "Wife",
+        share,
+        land: (totalLand * share) / numberOfWives,
+        gold: (totalGold * share) / numberOfWives,
+        silver: (totalSilver * share) / numberOfWives,
+        currency: (totalCurrency * share) / numberOfWives,
+      });
+    }
+    if (state.hasSon) {
+      const share = childShare / (numberOfSons + numberOfDaughters);
+      result.push({
+        heir: "Son",
+        share,
+        land: (totalLand * share) / numberOfSons,
+        gold: (totalGold * share) / numberOfSons,
+        silver: (totalSilver * share) / numberOfSons,
+        currency: (totalCurrency * share) / numberOfSons,
+      });
+    }
+
+    console.log(result);
   }
 
   return (
