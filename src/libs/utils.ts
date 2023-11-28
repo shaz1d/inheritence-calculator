@@ -31,14 +31,14 @@ function reducer(state: State, action: Action) {
       return {
         ...state,
         hasSon: !state.hasSon,
-        hasChild: state.hasSon || state.hasDaughter ? true : false,
+        hasChild: state.hasDaughter ? true : !state.hasSon,
       };
     }
     case "daughter": {
       return {
         ...state,
         hasDaughter: !state.hasDaughter,
-        hasChild: state.hasSon || state.hasDaughter ? true : false,
+        hasChild: state.hasSon ? true : !state.hasDaughter,
       };
     }
     case "father": {
