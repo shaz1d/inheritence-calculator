@@ -127,8 +127,8 @@ const MainContent = () => {
 
   return (
     <div>
-      <div className="bg-white p-4 rounded-3xl grid grid-cols-8 gap-4 mb-6">
-        <div className="col-span-4 p-6 text-pest-600">
+      <div className="bg-white p-4 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div className=" p-6 text-pest-600">
           <h2 className="text-xl">Relatives List</h2>
           <div className="grid grid-cols-2 gap-5 mt-6">
             <RelativeInput
@@ -179,7 +179,7 @@ const MainContent = () => {
             />
           </div>
         </div>
-        <div className="col-span-4 bg-pest-200 rounded-2xl p-5 text-pest-600">
+        <div className=" bg-pest-200 rounded-2xl p-5 text-pest-600">
           <h2 className="text-xl">Property Description</h2>
           <div className="grid grid-cols-2 gap-4 mt-6">
             <PropertyInput
