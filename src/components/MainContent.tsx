@@ -34,6 +34,7 @@ const MainContent = () => {
   const [gold, setGold] = useState("0");
   const [silver, setSilver] = useState("0");
   const [currency, setCurrency] = useState("0");
+  const [resultArray, setResultArray] = useState<RelativesShare[]>([]);
 
   const [state, dispatch] = useReducer(reducer, conditions);
 
@@ -44,12 +45,34 @@ const MainContent = () => {
     const totalSilver = parseFloat(silver);
     const totalCurrency = parseFloat(currency);
 
+    let shareLeft = 1;
     const husbandShare = state.hasHusband
       ? state.hasChild
         ? 1 / 4
         : 1 / 2
       : 0;
     const wifeShare = state.hasWife ? (state.hasChild ? 1 / 8 : 1 / 4) : 0;
+    shareLeft = 1 - husbandShare - wifeShare;
+
+    const daughterShare = state.hasDaughter
+      ? state.hasSon
+        ? 0
+        : state.hasFather || state.hasMother || state.hasTrueGrandmother
+        ? numberOfDaughters > 1
+          ? 2 / 3
+          : 1 / 2
+        : shareLeft
+      : 0;
+    shareLeft = shareLeft - daughterShare;
+
+    const fatherShare = state.hasFather
+      ? state.hasChild
+        ? state.hasSon
+          ? 1 / 6
+          : shareLeft
+        : shareLeft
+      : 0;
+    shareLeft = shareLeft - fatherShare;
 
     if (state.hasHusband) {
       const share = husbandShare;
@@ -63,29 +86,43 @@ const MainContent = () => {
       });
     }
     if (state.hasWife) {
-      const share = wifeShare;
+      const share = wifeShare / numberOfWives;
       result.push({
         heir: "Wife",
         share,
-        land: (totalLand * share) / numberOfWives,
-        gold: (totalGold * share) / numberOfWives,
-        silver: (totalSilver * share) / numberOfWives,
-        currency: (totalCurrency * share) / numberOfWives,
+        land: totalLand * share,
+        gold: totalGold * share,
+        silver: totalSilver * share,
+        currency: totalCurrency * share,
       });
     }
-    if (state.hasSon) {
-      const share = 9 / (numberOfSons + numberOfDaughters);
+    if (state.hasDaughter) {
+      const share = daughterShare / numberOfDaughters;
       result.push({
-        heir: "Son",
+        heir: "Daughter",
         share,
-        land: (totalLand * share) / numberOfSons,
-        gold: (totalGold * share) / numberOfSons,
-        silver: (totalSilver * share) / numberOfSons,
-        currency: (totalCurrency * share) / numberOfSons,
+        land: totalLand * share,
+        gold: totalGold * share,
+        silver: totalSilver * share,
+        currency: totalCurrency * share,
+      });
+    }
+    if (state.hasFather) {
+      const share = fatherShare;
+      result.push({
+        heir: "Father",
+        share,
+        land: totalLand * share,
+        gold: totalGold * share,
+        silver: totalSilver * share,
+        currency: totalCurrency * share,
       });
     }
 
-    console.log(result);
+    console.log(
+      `Husband Share: ${husbandShare} \n Wife Share:${wifeShare} \n Daughter Share:${daughterShare}\n Father share: ${fatherShare} \nShare left: ${shareLeft}`
+    );
+    setResultArray(result);
   }
 
   return (
@@ -178,7 +215,7 @@ const MainContent = () => {
           </div>
         </div>
       </div>
-      <Result />
+      {resultArray.length !== 0 && <Result result={resultArray} />}
     </div>
   );
 };
